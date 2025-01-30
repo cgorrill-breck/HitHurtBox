@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://mkwvsa2fi4bl"]
+
+[ext_resource type="Script" path="res://enemy.gd" id="1_4glc0"]
+[ext_resource type="Texture2D" uid="uid://hq74i41ptd1o" path="res://icon.svg" id="1_wkcyu"]
+[ext_resource type="PackedScene" uid="uid://bstcihkix8iry" path="res://hithurtbox/hurtbox.tscn" id="2_7gf77"]
+[ext_resource type="PackedScene" uid="uid://cvf65ls85fg3g" path="res://hithurtbox/hitbox.tscn" id="3_lmtgc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l0nva"]
+size = Vector2(112, 112)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y5k2b"]
+radius = 39.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m8oh3"]
+radius = 104.005
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_4glc0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.904088, 0.000659776, 0.904082, 1)
+texture = ExtResource("1_wkcyu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_l0nva")
+
+[node name="Hurtbox" parent="." instance=ExtResource("2_7gf77")]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource("CircleShape2D_y5k2b")
+
+[node name="HitBox" parent="." instance=ExtResource("3_lmtgc")]
+collision_layer = 4
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+shape = SubResource("CircleShape2D_m8oh3")
+
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+
+[editable path="Hurtbox"]
+[editable path="HitBox"]
