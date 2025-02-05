@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bigmbvde4nott" path="res://player.tscn" id="1_7rlbe"]
 [ext_resource type="PackedScene" uid="uid://mkwvsa2fi4bl" path="res://enemy.tscn" id="2_r6ww1"]
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" groups=["player_projectiles"]]
 
 [node name="Player" parent="." instance=ExtResource("1_7rlbe")]
 position = Vector2(258, 282)

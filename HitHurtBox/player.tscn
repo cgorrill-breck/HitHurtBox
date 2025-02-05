@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bigmbvde4nott"]
+[gd_scene load_steps=14 format=3 uid="uid://bigmbvde4nott"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_7e43f"]
 [ext_resource type="Texture2D" uid="uid://hq74i41ptd1o" path="res://icon.svg" id="1_n25g1"]
 [ext_resource type="PackedScene" uid="uid://bg1nktd7iqj6c" path="res://projectile.tscn" id="2_3etyg"]
 [ext_resource type="PackedScene" uid="uid://bstcihkix8iry" path="res://hithurtbox/hurtbox.tscn" id="2_dbfp1"]
 [ext_resource type="PackedScene" uid="uid://cvf65ls85fg3g" path="res://hithurtbox/hitbox.tscn" id="4_ed1is"]
+[ext_resource type="PackedScene" uid="uid://bqqrvpvdxpwl5" path="res://axe.tscn" id="6_dap6j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mribq"]
 size = Vector2(112, 118)
@@ -14,6 +15,71 @@ radius = 44.1814
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lkcog"]
 radius = 58.0345
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m4njq"]
+radius = 29.1548
+
+[sub_resource type="Animation" id="Animation_ycpik"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Axe:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Axe:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(116, -16)]
+}
+
+[sub_resource type="Animation" id="Animation_px10q"]
+resource_name = "chop"
+length = 0.125
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Axe:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.76976]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Axe:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.12),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(116, -16), Vector2(70, 55)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d7t17"]
+_data = {
+"RESET": SubResource("Animation_ycpik"),
+"chop": SubResource("Animation_px10q")
+}
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -41,7 +107,23 @@ collision_mask = 4
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 shape = SubResource("CircleShape2D_lkcog")
 
+[node name="Axe" parent="." instance=ExtResource("6_dap6j")]
+position = Vector2(116, -16)
+
+[node name="CollisionShape2D" parent="Axe/HitBox" index="0"]
+position = Vector2(9, -34)
+shape = SubResource("CircleShape2D_m4njq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Axe"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_d7t17")
+}
+autoplay = "RESET"
+
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
 
 [editable path="Hurtbox"]
 [editable path="HitBox"]
+[editable path="Axe"]
+[editable path="Axe/HitBox"]

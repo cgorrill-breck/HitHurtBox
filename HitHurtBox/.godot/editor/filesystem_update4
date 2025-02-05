@@ -1,0 +1,11 @@
+res://hithurtbox/hitbox.tscn
+res://hithurtbox/hurtbox.tscn
+res://player.tscn
+res://enemy.tscn
+res://projectile.tscn
+res://world.tscn
+res://axe.tscn
+res://player.gd
+res://enemy.gd
+res://projectile.gd
+res://hithurtbox/hitbox.gd

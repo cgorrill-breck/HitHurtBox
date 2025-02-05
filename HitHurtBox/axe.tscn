@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqqrvpvdxpwl5"]
+
+[ext_resource type="PackedScene" uid="uid://cvf65ls85fg3g" path="res://hithurtbox/hitbox.tscn" id="1_jks1e"]
+[ext_resource type="Texture2D" uid="uid://b4ge1pifjuoab" path="res://axelarge.png" id="2_upoph"]
+
+[node name="Axe" type="RigidBody2D"]
+gravity_scale = 0.0
+
+[node name="HitBox" parent="." instance=ExtResource("1_jks1e")]
+collision_layer = 32
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_upoph")
+
+[editable path="HitBox"]
